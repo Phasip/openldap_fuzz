@@ -16,7 +16,7 @@
     # TODO: change -v /root/fuzzdata to where you have the data & inputs ( containers looking for /fuzzing/openldap_fuzz/input_fuzz )
     DFLAGS="-v /root/fuzzdata/:/fuzzing --net=host --pid=host --ipc=host --uts=host --log-driver=none --rm --privileged -it --tmpfs /tmpfs --tmpfs /usr/local/var/run --user=root openldap_fuzz"
     AFLFLAGS="PYTHONPATH=/ AFL_MAP_SIZE=328792 AFL_TMPDIR=/tmpfs AFL_AUTORESUME=1 "
-    
+    ARCH=Box1
     #--Launch all the runners-- 
     screen -d -m -S leader /usr/bin/docker run $DFLAGS "$PREP_CMD; $AFLFLAGS afl-fuzz -b1 -i /fuzzing/openldap_fuzz/input_fuzz -o /fuzzing/outputs_fuzz -m 3024 -M $ARCH-leader -- /openldap/servers/slapd/fuzzing.ngram; exec bash"
     for i in $(seq 2 5 $(nproc)); do screen -d -m -S minion$i /usr/bin/docker run $DFLAGS "$PREP_CMD; $AFLFLAGS afl-fuzz -b$i -i /fuzzing/openldap_fuzz/input_fuzz -o /fuzzing/outputs_fuzz -m 3024 -S $ARCH-minion$i -- /openldap/servers/slapd/fuzzing.lto-laf; exec bash"; done
