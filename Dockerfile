@@ -28,7 +28,7 @@ RUN CC=gcc CFLAGS='-g -O0' /openldap/buildfuzz.sh fuzzing.debug
 RUN cp -r /openldap /openldap_clean\
     && cd /openldap_clean\
     && git stash\
-    && echo "int main(){}" > /openldap_clean/servers/slapd/fuzzing.c
+    && echo "int main(){}" > /openldap_clean/servers/slapd/fuzzing.c \
     && CC=gcc CFLAGS='-g -O0' /openldap_clean/buildfuzz.sh deleteme
 ARG CC=afl-clang-lto
 ARG CFLAGS='-g -O3 -fsanitize-coverage-blocklist=/openldap/afl_ignore.txt'
