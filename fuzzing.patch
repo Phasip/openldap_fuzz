@@ -20,7 +20,7 @@ index e69de29bb..6d4b6a4f4 100755
 @@ -0,0 +1,9 @@
 +set -e
 +cd /openldap
-+make clean
++make clean || echo "Failed to clean, doesn't matter"
 +./configure
 +make depend
 +make
