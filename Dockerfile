@@ -17,6 +17,7 @@ RUN apt-get install -y python3-pip \
     && pip3 install asn1 
 
 COPY openldap /openldap
+RUN chmod +x /openldap/buildfuzz.sh
 
 # Build a few versions of the target
 ARG AFL_LLVM_INSTRUMENT=CFG
