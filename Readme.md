@@ -1,6 +1,3 @@
-# Warning: Not tested after rename of stuff and removal of internal stuff. May need some massage.
-# Currently input_fuzz.tar.bz2 is not included, create your own intitial inputs. (Hopefully to be added later)
-
 ## Building
     cd openldap_fuzz
     git clone https://github.com/openldap/openldap
