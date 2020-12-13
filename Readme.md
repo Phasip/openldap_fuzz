@@ -24,7 +24,7 @@
     
 ## Crash triage
     docker run $DFLAGS "$PREP_CMD; bash"
-    find /fuzzing/outputs_fuzz/ -wholename \*crashes/id\* -exec /bin/sh -c '/openldap/servers/slapd/fuzzing.debug < "{}" 1>/dev/null 2>/tmpfs/out; echo "{}:\$?"' \; | grep -v ':0$' | rev | cut -d: -f2- | rev | tee /fuzzing/crashing_files
+    find /fuzzing/outputs_fuzz/ -wholename \*crashes/id\* -exec /bin/sh -c '/openldap/servers/slapd/fuzzing.debug < "{}" 1>/dev/null 2>/tmpfs/out; echo "{}:$?"' \; | grep -v ':0$' | rev | cut -d: -f2- | rev | tee /fuzzing/crashing_files
     for f in $(cat /fuzzing/crashing_files); do gdb /openldap/servers/slapd/fuzzing.debug -ex 'set pagination off' -ex 'set confirm off' -ex "set args < $f" -ex run -ex 'bt 8' -ex quit 2>&1 | grep -E ') at |program: |fuzzing.debug: | signal |) from '; done | tee /fuzzing/errors
 
 ## Info
